@@ -11,7 +11,7 @@ import data from './data.js';
 
 function App() {
 
-  // let [shoes, setShoes] =useState()
+  let [shoes, setShoes] =useState()
   return (
     <div className="App">
      <Navbar bg="light" variant="light">
@@ -27,6 +27,7 @@ function App() {
       <div className='container'>
       <div className='row'>
       <Loop data={data}/>
+      <Card/>
       </div>
          
 
@@ -34,21 +35,28 @@ function App() {
     </div>
   );
 }
-const img = [rainbow,rainbow2,sprinkle];
-const Loop=(data)=>{
-  //  console.log(data);
+function Card(){
+  return (
+    <div className="col-md-4">
+      <img src={rainbow} width="80%" />
+      <h4>상품명</h4>
+      <p>상품정보</p>
+    </div>
+  )
+}
+function Loop(data){
   return(
-    data.data.map((info, index)=>(
-        // console.log(info.title),
-        // console.log(index),
-        <div className='col-md-4' key={index}>
-        <img src={img[index]} style={{width:100}} className='product'></img>
-        <h4 className='productName'>{info.title}</h4>
-        <p>{info.content}</p>
-        <p className='productPrice'>{info.price}</p>
-        </div>
-      )
-    )
+    // data.map((info, i)=>{
+      console.log(data.data[0].title),
+      <div className='col-md-4'>
+      <img src={data.data[0].title} style={{width:100}} className='product'></img>
+      <h4 className='productName'>{data.data[0].title}</h4>
+      <p>{data.data[0].content}</p>
+      <p className='productPrice'>{data.data[0].price}</p>
+      </div>
+
+    // })
+    
   )
 }
 export default App;
