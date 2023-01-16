@@ -17,7 +17,7 @@ let BlackBox = styled.div`
   padding : 20px;
 `;
 const img = [rainbow,rainbow2,sprinkle];
-const Detail =(data)=>{
+const Detail =(shoes)=>{
   const [show,setShow] = useState(true);
   let [num, setNum] = useState('');
   useEffect(()=>{
@@ -47,9 +47,9 @@ const Detail =(data)=>{
       </div>
       <div className="col-md-6">
         <input onChange={(e)=>{setNum(e.target.value)}}></input>
-        <h4 className="pt-5">{data.data[id].title}</h4>
-        <p>{data.data[id].content}</p>
-        <p>{data.data[id].price}</p>
+        <h4 className="pt-5">{shoes.shoes[id].title}</h4>
+        <p>{shoes.shoes[id].content}</p>
+        <p>{shoes.shoes[id].price}</p>
         <button className="btn btn-danger">주문하기</button> 
       </div>
     </div>

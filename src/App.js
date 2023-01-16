@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect,useState } from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { Navbar, Nav, Container} from 'react-bootstrap';
@@ -6,13 +6,19 @@ import header from './img/header.jpg'
 import rainbow2 from './img/rainbow2.png'
 import rainbow from './img/rainbow.png'
 import sprinkle from './img/sprinkle.png'
-import { useState } from 'react';
+import sprinkle1 from './img/sprinkle1.png'
+import ballons from './img/ballons.png'
 import data from './data.js';
 import Detail from './routes/Detail.js'
 import { Routes, Route, useNavigate, Outlet, useParams } from 'react-router-dom';
-const img = [rainbow,rainbow2,sprinkle];
+import axios from 'axios';
+const img = [rainbow,rainbow2,sprinkle,sprinkle1,ballons];
+
 function App() {
-  // let [shoes, setShoes] =useState()
+  let [shoes, setShoes] =useState(data);
+  const [count, setCount] = useState(0);
+
+  //console.log(shoes)
   let navigate = useNavigate();
   return (
     <div className="App">
@@ -29,15 +35,47 @@ function App() {
         </Container>
       </Navbar>
 
+        <button onClick={()=>{
+
+           let temp = [];
+           if(count ===0){
+            axios.get('https://codingapple1.github.io/shop/data2.json')
+           .then((결과)=>{
+             //console.log(data)
+             //let temp = [];
+             temp.push(...data, ...결과.data);
+             setShoes(temp)
+             setCount(count+1);
+           })
+           .catch(()=>{
+
+           })
+           }else if(count===1){
+            axios.get('https://codingapple1.github.io/shop/data3.json')
+           .then((결과)=>{
+             //console.log(data)
+             //let temp = [];
+             temp.push(...data, ...결과.data);
+             setShoes(temp)
+             setCount(count+1);
+           })
+           .catch(()=>{
+
+           })
+           }else{
+            alert('더 이상 존재하는 상품이 없습니다!')
+           }
+           
+        }}>버튼</button>
       <Routes>
         //!메인
         <Route path='/' element={
-        <Main data={data}/>
+        <Main shoes={shoes}/>
         }/>
         //!상품
         <Route path='/detail/:id' 
         element={
-          <Detail data={data} img={img}/>
+          <Detail shoes={shoes} img={img}/>
         }/> //** 페이지 */
         
       
@@ -54,11 +92,11 @@ function App() {
 
         
         <Route path='*'
-        element={
+        element={ 
           <div>없는 페이지입니다.</div>
         }/>
       </Routes>
-
+        
 
 
       
@@ -66,13 +104,13 @@ function App() {
   );
 }
 
-const Main =(data, navigate)=>{
+const Main =(shoes, navigate)=>{
   return(
     <>
     <div className='main-bg' style={{backgroundImage: 'url('+header+')'}}></div>
     <div className='container'>
     <div className='row'>
-    <Loop data={data.data}/>
+    <Loop shoes={shoes.shoes}/>
     </div>
     </div>
     </>
@@ -125,10 +163,10 @@ const Event = ()=>{
 //   //e.preventDefault();
 // }
 
-const Loop=(data)=>{
-  //  console.log(data);
+const Loop=(shoes)=>{
+    console.log(shoes.shoes);
   return(
-    data.data.map((info, i)=>(
+    shoes.shoes.map((info, i)=>(
         // console.log(info.title),
         // console.log(index),
         <div className='col-md-4' key={i}>
@@ -142,4 +180,6 @@ const Loop=(data)=>{
     )
   )
 }
+
+
 export default App;
