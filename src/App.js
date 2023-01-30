@@ -1,4 +1,4 @@
-import React, { useEffect,useState } from 'react';
+import React, { createContext, useEffect,useState } from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { Navbar, Nav, Container} from 'react-bootstrap';
@@ -14,8 +14,10 @@ import { Routes, Route, useNavigate, Outlet, useParams } from 'react-router-dom'
 import axios from 'axios';
 const img = [rainbow,rainbow2,sprinkle,sprinkle1,ballons];
 
+export let Context1 = createContext()
 function App() {
   let [shoes, setShoes] =useState(data);
+  let [stock, setStock] = useState([10,11,12])
   const [count, setCount] = useState(0);
 
   //console.log(shoes)
@@ -75,7 +77,10 @@ function App() {
         //!상품
         <Route path='/detail/:id' 
         element={
-          <Detail shoes={shoes} img={img}/>
+          <Context1.Provider value={{stock}}>
+          <Detail shoes={shoes} img={img}
+          />
+          </Context1.Provider>
         }/> //** 페이지 */
         
       
